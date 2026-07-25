@@ -1,0 +1,1 @@
+{"FEATURES": ["s2", "s3", "s4", "s7", "s8", "s9", "s11", "s12", "s13", "s14", "s15", "s17", "s20", "s21"], "WINDOW": 30, "RUL_CAP": 125, "SEUIL_CRITIQUE": 24, "SEUIL_DEGRADATION": 61, "SEUIL_SURVEILLANCE": 2.0, "SEUIL_ANOMALIE_CONFIRMEE": 4.0, "MAE": 9.9, "meilleur_classificateur": "XGBoost"}

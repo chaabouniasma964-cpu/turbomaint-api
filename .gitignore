@@ -1,0 +1,25 @@
+# Dépendances
+node_modules/
+**/node_modules/
+
+# Environnement Python
+.venv/
+**/.venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+
+# Build front
+dist/
+**/dist/
+
+# Variables d'environnement locales (garder .env.example)
+.env
+**/.env
+
+# Config outillage local
+.claude/
+
+# Divers OS
+.DS_Store
+Thumbs.db

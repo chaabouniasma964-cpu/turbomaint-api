@@ -1,0 +1,1701 @@
+[
+  {
+    "moteur": 1,
+    "rul_predit": 113.4,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 3.52,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 2.34,
+        "niveau": "surveillance",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 2,
+    "rul_predit": 121.4,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 3,
+    "rul_predit": 48.3,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s20",
+        "description": "W31 refroidissement turbine HP",
+        "score_anomalie": 2.75,
+        "niveau": "surveillance",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 4,
+    "rul_predit": 85.4,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 5,
+    "rul_predit": 105.5,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 6,
+    "rul_predit": 108.1,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 7,
+    "rul_predit": 110.0,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 8,
+    "rul_predit": 97.0,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 3.59,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 2.38,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 2.17,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 9,
+    "rul_predit": 121.5,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s11",
+        "description": "Ps30 pression statique HPC",
+        "score_anomalie": 2.2,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 10,
+    "rul_predit": 91.6,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s4",
+        "description": "T50 temp. sortie turbine BP",
+        "score_anomalie": 3.12,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 11,
+    "rul_predit": 93.2,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 4.12,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 3.43,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s17",
+        "description": "htBleed enthalpie prélèvement",
+        "score_anomalie": 2.55,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 12,
+    "rul_predit": 106.0,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 2.26,
+        "niveau": "surveillance",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 13,
+    "rul_predit": 88.0,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 14,
+    "rul_predit": 117.8,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 5.25,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 4.77,
+        "niveau": "anomalie",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 3.72,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 15,
+    "rul_predit": 105.9,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 16,
+    "rul_predit": 104.6,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 17,
+    "rul_predit": 48.4,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 23.7,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 23.07,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 8.6,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      }
+    ]
+  },
+  {
+    "moteur": 18,
+    "rul_predit": 27.0,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s20",
+        "description": "W31 refroidissement turbine HP",
+        "score_anomalie": 4.97,
+        "niveau": "anomalie",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 4.36,
+        "niveau": "anomalie",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 2.66,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 19,
+    "rul_predit": 104.8,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 20,
+    "rul_predit": 18.5,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s4",
+        "description": "T50 temp. sortie turbine BP",
+        "score_anomalie": 9.71,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s7",
+        "description": "P30 pression sortie compresseur HP",
+        "score_anomalie": 9.66,
+        "niveau": "anomalie",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s11",
+        "description": "Ps30 pression statique HPC",
+        "score_anomalie": 9.47,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 21,
+    "rul_predit": 77.7,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 7.34,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 6.05,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      }
+    ]
+  },
+  {
+    "moteur": 22,
+    "rul_predit": 122.3,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 23,
+    "rul_predit": 118.8,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 2.28,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      }
+    ]
+  },
+  {
+    "moteur": 24,
+    "rul_predit": 17.9,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 125.15,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 123.09,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 17.54,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 25,
+    "rul_predit": 110.5,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s21",
+        "description": "W32 refroidissement turbine BP",
+        "score_anomalie": 2.8,
+        "niveau": "surveillance",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 26,
+    "rul_predit": 113.7,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 27,
+    "rul_predit": 94.1,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 28,
+    "rul_predit": 109.6,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 29,
+    "rul_predit": 97.5,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 30,
+    "rul_predit": 105.6,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s15",
+        "description": "BPR taux de dilution",
+        "score_anomalie": 2.45,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 31,
+    "rul_predit": 10.8,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s4",
+        "description": "T50 temp. sortie turbine BP",
+        "score_anomalie": 20.56,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 17.59,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s11",
+        "description": "Ps30 pression statique HPC",
+        "score_anomalie": 17.05,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 32,
+    "rul_predit": 50.2,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 21.26,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 19.91,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 7.41,
+        "niveau": "anomalie",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 33,
+    "rul_predit": 110.6,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s3",
+        "description": "T30 temp. sortie compresseur HP",
+        "score_anomalie": 2.99,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 34,
+    "rul_predit": 7.7,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s11",
+        "description": "Ps30 pression statique HPC",
+        "score_anomalie": 18.93,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s4",
+        "description": "T50 temp. sortie turbine BP",
+        "score_anomalie": 15.99,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 15.77,
+        "niveau": "anomalie",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 35,
+    "rul_predit": 12.8,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s11",
+        "description": "Ps30 pression statique HPC",
+        "score_anomalie": 22.31,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s4",
+        "description": "T50 temp. sortie turbine BP",
+        "score_anomalie": 22.05,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 17.09,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      }
+    ]
+  },
+  {
+    "moteur": 36,
+    "rul_predit": 25.8,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s4",
+        "description": "T50 temp. sortie turbine BP",
+        "score_anomalie": 12.9,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 11.46,
+        "niveau": "anomalie",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s7",
+        "description": "P30 pression sortie compresseur HP",
+        "score_anomalie": 6.58,
+        "niveau": "anomalie",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 37,
+    "rul_predit": 19.3,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 4.92,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 4.87,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s11",
+        "description": "Ps30 pression statique HPC",
+        "score_anomalie": 3.43,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 38,
+    "rul_predit": 58.4,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 7.53,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 7.39,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s17",
+        "description": "htBleed enthalpie prélèvement",
+        "score_anomalie": 2.74,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 39,
+    "rul_predit": 120.7,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 2.97,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 40,
+    "rul_predit": 33.7,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s17",
+        "description": "htBleed enthalpie prélèvement",
+        "score_anomalie": 6.8,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s11",
+        "description": "Ps30 pression statique HPC",
+        "score_anomalie": 6.35,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s3",
+        "description": "T30 temp. sortie compresseur HP",
+        "score_anomalie": 4.77,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 41,
+    "rul_predit": 15.8,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s7",
+        "description": "P30 pression sortie compresseur HP",
+        "score_anomalie": 5.75,
+        "niveau": "anomalie",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 4.07,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s11",
+        "description": "Ps30 pression statique HPC",
+        "score_anomalie": 3.87,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 42,
+    "rul_predit": 6.0,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 15.92,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 11.92,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s7",
+        "description": "P30 pression sortie compresseur HP",
+        "score_anomalie": 7.35,
+        "niveau": "anomalie",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 43,
+    "rul_predit": 66.7,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 44,
+    "rul_predit": 108.6,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s15",
+        "description": "BPR taux de dilution",
+        "score_anomalie": 2.73,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s21",
+        "description": "W32 refroidissement turbine BP",
+        "score_anomalie": 2.37,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s7",
+        "description": "P30 pression sortie compresseur HP",
+        "score_anomalie": 2.35,
+        "niveau": "surveillance",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 45,
+    "rul_predit": 73.7,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 46,
+    "rul_predit": 40.5,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 16.75,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 16.49,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 7.24,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 47,
+    "rul_predit": 114.0,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 3.04,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 2.51,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 2.32,
+        "niveau": "surveillance",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 48,
+    "rul_predit": 104.7,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 49,
+    "rul_predit": 21.3,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s4",
+        "description": "T50 temp. sortie turbine BP",
+        "score_anomalie": 8.78,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 7.81,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s7",
+        "description": "P30 pression sortie compresseur HP",
+        "score_anomalie": 7.39,
+        "niveau": "anomalie",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 50,
+    "rul_predit": 101.9,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 51,
+    "rul_predit": 105.0,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 52,
+    "rul_predit": 31.3,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 42.11,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 40.07,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 6.67,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 53,
+    "rul_predit": 26.8,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 37.96,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 37.53,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 10.82,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      }
+    ]
+  },
+  {
+    "moteur": 54,
+    "rul_predit": 115.6,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 55,
+    "rul_predit": 117.1,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 56,
+    "rul_predit": 17.3,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 22.23,
+        "niveau": "anomalie",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 19.65,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 15.42,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 57,
+    "rul_predit": 108.9,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s15",
+        "description": "BPR taux de dilution",
+        "score_anomalie": 3.32,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 2.27,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      }
+    ]
+  },
+  {
+    "moteur": 58,
+    "rul_predit": 48.8,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s4",
+        "description": "T50 temp. sortie turbine BP",
+        "score_anomalie": 2.1,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 59,
+    "rul_predit": 106.6,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 60,
+    "rul_predit": 111.1,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 61,
+    "rul_predit": 20.3,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 7.18,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 4.91,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 4.67,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 62,
+    "rul_predit": 39.2,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 17.93,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 17.52,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 5.73,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      }
+    ]
+  },
+  {
+    "moteur": 63,
+    "rul_predit": 86.9,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 64,
+    "rul_predit": 22.3,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 3.62,
+        "niveau": "surveillance",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 2.7,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s7",
+        "description": "P30 pression sortie compresseur HP",
+        "score_anomalie": 2.65,
+        "niveau": "surveillance",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 65,
+    "rul_predit": 120.8,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 2.57,
+        "niveau": "surveillance",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s20",
+        "description": "W31 refroidissement turbine HP",
+        "score_anomalie": 2.34,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 66,
+    "rul_predit": 18.2,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 66.99,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 63.57,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s17",
+        "description": "htBleed enthalpie prélèvement",
+        "score_anomalie": 8.91,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 67,
+    "rul_predit": 119.2,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 2.67,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 68,
+    "rul_predit": 10.3,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 15.1,
+        "niveau": "anomalie",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 13.62,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s4",
+        "description": "T50 temp. sortie turbine BP",
+        "score_anomalie": 13.39,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 69,
+    "rul_predit": 117.6,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 2.4,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s8",
+        "description": "Nf vitesse fan",
+        "score_anomalie": 2.08,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 70,
+    "rul_predit": 94.3,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 71,
+    "rul_predit": 113.6,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s21",
+        "description": "W32 refroidissement turbine BP",
+        "score_anomalie": 2.97,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 72,
+    "rul_predit": 65.8,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 73,
+    "rul_predit": 111.6,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 74,
+    "rul_predit": 103.0,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 75,
+    "rul_predit": 108.2,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s4",
+        "description": "T50 temp. sortie turbine BP",
+        "score_anomalie": 3.23,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 76,
+    "rul_predit": 8.5,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 47.36,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 47.12,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s4",
+        "description": "T50 temp. sortie turbine BP",
+        "score_anomalie": 13.64,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 77,
+    "rul_predit": 28.6,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 3.96,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 2.99,
+        "niveau": "surveillance",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s4",
+        "description": "T50 temp. sortie turbine BP",
+        "score_anomalie": 2.25,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 78,
+    "rul_predit": 125.0,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 79,
+    "rul_predit": 96.6,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 80,
+    "rul_predit": 93.2,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 2.43,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      }
+    ]
+  },
+  {
+    "moteur": 81,
+    "rul_predit": 8.4,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 24.64,
+        "niveau": "anomalie",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s7",
+        "description": "P30 pression sortie compresseur HP",
+        "score_anomalie": 18.44,
+        "niveau": "anomalie",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s11",
+        "description": "Ps30 pression statique HPC",
+        "score_anomalie": 18.1,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 82,
+    "rul_predit": 12.1,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s11",
+        "description": "Ps30 pression statique HPC",
+        "score_anomalie": 13.08,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 9.55,
+        "niveau": "anomalie",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s7",
+        "description": "P30 pression sortie compresseur HP",
+        "score_anomalie": 8.2,
+        "niveau": "anomalie",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 83,
+    "rul_predit": 123.7,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 84,
+    "rul_predit": 82.2,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s15",
+        "description": "BPR taux de dilution",
+        "score_anomalie": 3.16,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 2.23,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 85,
+    "rul_predit": 125.0,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s20",
+        "description": "W31 refroidissement turbine HP",
+        "score_anomalie": 3.01,
+        "niveau": "surveillance",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 86,
+    "rul_predit": 110.0,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 87,
+    "rul_predit": 116.3,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 88,
+    "rul_predit": 119.6,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 2.8,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 2.72,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      }
+    ]
+  },
+  {
+    "moteur": 89,
+    "rul_predit": 112.0,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 2.57,
+        "niveau": "surveillance",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 90,
+    "rul_predit": 30.7,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 11.68,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 10.83,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s11",
+        "description": "Ps30 pression statique HPC",
+        "score_anomalie": 6.77,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 91,
+    "rul_predit": 25.8,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 15.58,
+        "niveau": "anomalie",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s11",
+        "description": "Ps30 pression statique HPC",
+        "score_anomalie": 11.69,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 11.08,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 92,
+    "rul_predit": 26.6,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s12",
+        "description": "phi débit carburant/Ps30",
+        "score_anomalie": 11.76,
+        "niveau": "anomalie",
+        "derive": "chute"
+      },
+      {
+        "capteur": "s11",
+        "description": "Ps30 pression statique HPC",
+        "score_anomalie": 10.88,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s7",
+        "description": "P30 pression sortie compresseur HP",
+        "score_anomalie": 7.83,
+        "niveau": "anomalie",
+        "derive": "chute"
+      }
+    ]
+  },
+  {
+    "moteur": 93,
+    "rul_predit": 47.1,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 9.91,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 9.43,
+        "niveau": "anomalie",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s4",
+        "description": "T50 temp. sortie turbine BP",
+        "score_anomalie": 4.07,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 94,
+    "rul_predit": 67.2,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 95,
+    "rul_predit": 108.2,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 2.68,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      }
+    ]
+  },
+  {
+    "moteur": 96,
+    "rul_predit": 105.7,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 97,
+    "rul_predit": 92.7,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 3.8,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 2.66,
+        "niveau": "surveillance",
+        "derive": "capteur figé"
+      },
+      {
+        "capteur": "s17",
+        "description": "htBleed enthalpie prélèvement",
+        "score_anomalie": 2.08,
+        "niveau": "surveillance",
+        "derive": "hausse"
+      }
+    ]
+  },
+  {
+    "moteur": 98,
+    "rul_predit": 70.1,
+    "etat_predit": "Dégradation",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 99,
+    "rul_predit": 116.9,
+    "etat_predit": "Sain",
+    "capteurs_anormaux": []
+  },
+  {
+    "moteur": 100,
+    "rul_predit": 15.6,
+    "etat_predit": "Critique",
+    "capteurs_anormaux": [
+      {
+        "capteur": "s14",
+        "description": "NRc vitesse corrigée HP",
+        "score_anomalie": 130.42,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s9",
+        "description": "Nc vitesse corps HP",
+        "score_anomalie": 126.29,
+        "niveau": "anomalie",
+        "derive": "hausse"
+      },
+      {
+        "capteur": "s13",
+        "description": "NRf vitesse corrigée fan",
+        "score_anomalie": 15.66,
+        "niveau": "anomalie",
+        "derive": "chute"
+      }
+    ]
+  }
+]

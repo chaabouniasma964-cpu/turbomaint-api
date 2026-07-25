@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic>=2
+numpy
+pandas
+requests
+reportlab
+psycopg2-binary

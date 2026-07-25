@@ -1,0 +1,101 @@
+Moteur,RUL réel,RUL prédit (M1),État réel,État (LSTM),État (XGB),État (RF),Capteurs (M3),Erreur RUL
+1,112.0,113.4,Sain,Sain,Sain,Sain,"s14(surv.), s9(surv.)",1.44
+2,98.0,121.4,Sain,Sain,Sain,Sain,-,23.36
+3,69.0,48.3,Sain,Dégradation,Dégradation,Dégradation,s20(surv.),20.66
+4,82.0,85.4,Sain,Sain,Sain,Sain,-,3.4
+5,91.0,105.5,Sain,Sain,Sain,Sain,-,14.5
+6,93.0,108.1,Sain,Sain,Sain,Sain,-,15.1
+7,91.0,110.0,Sain,Sain,Sain,Sain,-,19.01
+8,95.0,97.0,Sain,Sain,Sain,Sain,"s12(surv.), s8(surv.), s13(surv.)",1.96
+9,111.0,121.5,Sain,Sain,Sain,Sain,s11(surv.),10.5
+10,96.0,91.6,Sain,Sain,Sain,Sain,s4(surv.),4.36
+11,97.0,93.2,Sain,Sain,Sain,Sain,"s14(ANOMALIE), s9(surv.), s17(surv.)",3.79
+12,124.0,106.0,Sain,Sain,Sain,Sain,s13(surv.),17.99
+13,95.0,88.0,Sain,Sain,Sain,Sain,-,6.99
+14,107.0,117.8,Sain,Sain,Sain,Sain,"s14(ANOMALIE), s9(ANOMALIE), s8(surv.)",10.84
+15,83.0,105.9,Sain,Sain,Sain,Sain,-,22.89
+16,84.0,104.6,Sain,Sain,Sain,Sain,-,20.55
+17,50.0,48.4,Dégradation,Dégradation,Dégradation,Dégradation,"s14(ANOMALIE), s9(ANOMALIE), s13(ANOMALIE)",1.57
+18,28.0,27.0,Dégradation,Dégradation,Dégradation,Sain,"s20(ANOMALIE), s12(ANOMALIE), s8(surv.)",1.01
+19,87.0,104.8,Sain,Sain,Sain,Sain,-,17.84
+20,16.0,18.5,Critique,Critique,Critique,Critique,"s4(ANOMALIE), s7(ANOMALIE), s11(ANOMALIE)",2.47
+21,57.0,77.7,Dégradation,Dégradation,Dégradation,Sain,"s9(ANOMALIE), s14(ANOMALIE)",20.75
+22,111.0,122.3,Sain,Sain,Sain,Sain,-,11.26
+23,113.0,118.8,Sain,Sain,Sain,Sain,s14(surv.),5.78
+24,20.0,17.9,Critique,Critique,Critique,Critique,"s14(ANOMALIE), s9(ANOMALIE), s8(ANOMALIE)",2.08
+25,125.0,110.5,Sain,Sain,Sain,Sain,s21(surv.),14.52
+26,119.0,113.7,Sain,Sain,Sain,Sain,-,5.29
+27,66.0,94.1,Sain,Sain,Sain,Sain,-,28.05
+28,97.0,109.6,Sain,Sain,Sain,Sain,-,12.64
+29,90.0,97.5,Sain,Sain,Sain,Sain,-,7.48
+30,115.0,105.6,Sain,Sain,Sain,Sain,s15(surv.),9.41
+31,8.0,10.8,Critique,Critique,Critique,Critique,"s4(ANOMALIE), s9(ANOMALIE), s11(ANOMALIE)",2.83
+32,48.0,50.2,Dégradation,Dégradation,Dégradation,Dégradation,"s14(ANOMALIE), s9(ANOMALIE), s8(ANOMALIE)",2.2
+33,106.0,110.6,Sain,Sain,Sain,Sain,s3(surv.),4.61
+34,7.0,7.7,Critique,Critique,Critique,Critique,"s11(ANOMALIE), s4(ANOMALIE), s12(ANOMALIE)",0.72
+35,11.0,12.8,Critique,Critique,Critique,Critique,"s11(ANOMALIE), s4(ANOMALIE), s12(ANOMALIE)",1.79
+36,19.0,25.8,Critique,Dégradation,Critique,Critique,"s4(ANOMALIE), s12(ANOMALIE), s7(ANOMALIE)",6.78
+37,21.0,19.3,Critique,Dégradation,Dégradation,Sain,"s8(ANOMALIE), s13(ANOMALIE), s11(surv.)",1.72
+38,50.0,58.4,Dégradation,Dégradation,Dégradation,Dégradation,"s9(ANOMALIE), s14(ANOMALIE), s17(surv.)",8.37
+39,125.0,120.7,Sain,Sain,Sain,Sain,s12(surv.),4.35
+40,28.0,33.7,Dégradation,Dégradation,Dégradation,Dégradation,"s17(ANOMALIE), s11(ANOMALIE), s3(ANOMALIE)",5.72
+41,18.0,15.8,Critique,Critique,Dégradation,Sain,"s7(ANOMALIE), s14(ANOMALIE), s11(surv.)",2.23
+42,10.0,6.0,Critique,Critique,Critique,Critique,"s13(ANOMALIE), s8(ANOMALIE), s7(ANOMALIE)",4.0
+43,59.0,66.7,Dégradation,Dégradation,Sain,Sain,-,7.74
+44,109.0,108.6,Sain,Sain,Sain,Sain,"s15(surv.), s21(surv.), s7(surv.)",0.36
+45,114.0,73.7,Sain,Sain,Sain,Sain,-,40.28
+46,47.0,40.5,Dégradation,Dégradation,Dégradation,Dégradation,"s9(ANOMALIE), s14(ANOMALIE), s8(ANOMALIE)",6.55
+47,125.0,114.0,Sain,Sain,Sain,Sain,"s13(surv.), s14(surv.), s9(surv.)",10.97
+48,92.0,104.7,Sain,Sain,Sain,Sain,-,12.71
+49,21.0,21.3,Critique,Critique,Critique,Critique,"s4(ANOMALIE), s13(ANOMALIE), s7(ANOMALIE)",0.28
+50,79.0,101.9,Sain,Sain,Sain,Sain,-,22.95
+51,114.0,105.0,Sain,Sain,Sain,Sain,-,8.99
+52,29.0,31.3,Dégradation,Dégradation,Dégradation,Dégradation,"s14(ANOMALIE), s9(ANOMALIE), s8(ANOMALIE)",2.27
+53,26.0,26.8,Dégradation,Dégradation,Dégradation,Dégradation,"s14(ANOMALIE), s9(ANOMALIE), s8(ANOMALIE)",0.76
+54,97.0,115.6,Sain,Sain,Sain,Sain,-,18.64
+55,125.0,117.1,Sain,Sain,Sain,Sain,-,7.94
+56,15.0,17.3,Critique,Critique,Critique,Critique,"s12(ANOMALIE), s13(ANOMALIE), s8(ANOMALIE)",2.34
+57,103.0,108.9,Sain,Sain,Sain,Sain,"s15(surv.), s8(surv.)",5.92
+58,37.0,48.8,Dégradation,Dégradation,Dégradation,Dégradation,s4(surv.),11.77
+59,114.0,106.6,Sain,Sain,Sain,Sain,-,7.45
+60,100.0,111.1,Sain,Sain,Sain,Sain,-,11.13
+61,21.0,20.3,Critique,Critique,Dégradation,Dégradation,"s13(ANOMALIE), s9(ANOMALIE), s8(ANOMALIE)",0.65
+62,54.0,39.2,Dégradation,Dégradation,Dégradation,Dégradation,"s9(ANOMALIE), s14(ANOMALIE), s13(ANOMALIE)",14.84
+63,72.0,86.9,Sain,Sain,Sain,Sain,-,14.89
+64,28.0,22.3,Dégradation,Critique,Dégradation,Dégradation,"s12(surv.), s8(surv.), s7(surv.)",5.68
+65,125.0,120.8,Sain,Sain,Sain,Sain,"s13(surv.), s20(surv.)",4.22
+66,14.0,18.2,Critique,Critique,Critique,Critique,"s14(ANOMALIE), s9(ANOMALIE), s17(ANOMALIE)",4.16
+67,77.0,119.2,Sain,Sain,Sain,Sain,s12(surv.),42.17
+68,8.0,10.3,Critique,Critique,Critique,Critique,"s12(ANOMALIE), s9(ANOMALIE), s4(ANOMALIE)",2.28
+69,121.0,117.6,Sain,Sain,Sain,Sain,"s14(surv.), s8(surv.)",3.41
+70,94.0,94.3,Sain,Sain,Sain,Sain,-,0.34
+71,118.0,113.6,Sain,Sain,Sain,Sain,s21(surv.),4.37
+72,50.0,65.8,Dégradation,Dégradation,Dégradation,Sain,-,15.83
+73,125.0,111.6,Sain,Sain,Sain,Sain,-,13.39
+74,125.0,103.0,Sain,Sain,Sain,Sain,-,22.05
+75,113.0,108.2,Sain,Sain,Sain,Sain,s4(surv.),4.76
+76,10.0,8.5,Critique,Critique,Critique,Critique,"s9(ANOMALIE), s14(ANOMALIE), s4(ANOMALIE)",1.51
+77,34.0,28.6,Dégradation,Dégradation,Dégradation,Dégradation,"s13(surv.), s12(surv.), s4(surv.)",5.41
+78,107.0,125.0,Sain,Sain,Sain,Sain,-,18.0
+79,63.0,96.6,Sain,Sain,Sain,Sain,-,33.55
+80,90.0,93.2,Sain,Sain,Sain,Sain,s9(surv.),3.18
+81,8.0,8.4,Critique,Critique,Critique,Critique,"s12(ANOMALIE), s7(ANOMALIE), s11(ANOMALIE)",0.42
+82,9.0,12.1,Critique,Critique,Critique,Critique,"s11(ANOMALIE), s12(ANOMALIE), s7(ANOMALIE)",3.15
+83,125.0,123.7,Sain,Sain,Sain,Sain,-,1.31
+84,58.0,82.2,Dégradation,Sain,Sain,Sain,"s15(surv.), s13(surv.)",24.17
+85,118.0,125.0,Sain,Sain,Sain,Sain,s20(surv.),7.0
+86,89.0,110.0,Sain,Sain,Sain,Sain,-,20.95
+87,116.0,116.3,Sain,Sain,Sain,Sain,-,0.29
+88,115.0,119.6,Sain,Sain,Sain,Sain,"s14(surv.), s9(surv.)",4.63
+89,125.0,112.0,Sain,Sain,Sain,Sain,s12(surv.),12.97
+90,28.0,30.7,Dégradation,Dégradation,Critique,Dégradation,"s9(ANOMALIE), s14(ANOMALIE), s11(ANOMALIE)",2.66
+91,38.0,25.8,Dégradation,Dégradation,Critique,Critique,"s12(ANOMALIE), s11(ANOMALIE), s13(ANOMALIE)",12.24
+92,20.0,26.6,Critique,Dégradation,Critique,Critique,"s12(ANOMALIE), s11(ANOMALIE), s7(ANOMALIE)",6.63
+93,85.0,47.1,Sain,Dégradation,Dégradation,Dégradation,"s14(ANOMALIE), s9(ANOMALIE), s4(ANOMALIE)",37.92
+94,55.0,67.2,Dégradation,Dégradation,Sain,Dégradation,-,12.21
+95,125.0,108.2,Sain,Sain,Sain,Sain,s14(surv.),16.8
+96,125.0,105.7,Sain,Sain,Sain,Sain,-,19.31
+97,82.0,92.7,Sain,Sain,Sain,Sain,"s9(surv.), s14(surv.), s17(surv.)",10.74
+98,59.0,70.1,Dégradation,Dégradation,Dégradation,Sain,-,11.12
+99,117.0,116.9,Sain,Sain,Sain,Sain,-,0.13
+100,20.0,15.6,Critique,Critique,Critique,Critique,"s14(ANOMALIE), s9(ANOMALIE), s13(ANOMALIE)",4.36
