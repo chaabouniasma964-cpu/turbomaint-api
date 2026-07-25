@@ -1,0 +1,59 @@
+# ============================================================================
+# TurboMaint — Orchestration complète (base + API + site)
+#
+# Lancement (dans la VM, à la racine du projet) :
+#   docker compose up -d --build
+# Arrêt (les données de la base survivent) :
+#   docker compose down
+#
+# Accès depuis Windows (via redirection de ports VirtualBox) :
+#   Site : http://localhost:8080   |   API : http://localhost:7860
+#
+# Secrets : créer un fichier .env À CÔTÉ de ce fichier (non versionné) :
+#   GROQ_API_KEY=ta_cle_groq
+#   DB_PASSWORD=un_mot_de_passe   (optionnel, défaut turbomaint_secret)
+# ============================================================================
+services:
+
+  db:
+    image: postgres:16-alpine
+    container_name: turbomaint-db
+    environment:
+      POSTGRES_DB: turbomaint
+      POSTGRES_USER: turbomaint
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-turbomaint_secret}
+    volumes:
+      # Volume nommé : les données persistent même si le conteneur est recréé
+      - donnees_pg:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"   # exposé pour debug/inspection depuis l'hôte (optionnel)
+    restart: unless-stopped
+
+  api:
+    build: ./turbomaint-api
+    container_name: turbomaint-api
+    ports:
+      - "7860:7860"
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY}
+      # L'API joint la base par son NOM DE SERVICE "db" (réseau interne compose)
+      DATABASE_URL: postgresql://turbomaint:${DB_PASSWORD:-turbomaint_secret}@db:5432/turbomaint
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  site:
+    build:
+      context: ./turbomaint
+      args:
+        # Le navigateur appelle l'API via la redirection de port -> localhost
+        VITE_API_URL: http://localhost:7860
+    container_name: turbomaint-site
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  donnees_pg:
