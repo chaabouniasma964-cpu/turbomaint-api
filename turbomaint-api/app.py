@@ -210,12 +210,19 @@ def db_save_diagnostic(diag):
         print(f"BD : sauvegarde impossible ({e}) — diagnostic non persisté.")
 
 if DATABASE_URL:
-    try:
-        db_init()
-        print("Base de données prête (clients, mécaniciens, flotte, relevés, "
-              "ordres, alertes, diagnostics).")
-    except Exception as e:
-        print(f"BD pas encore joignable ({e}) — nouvel essai au premier diagnostic.")
+    # La base (conteneur "db") peut mettre quelques secondes à accepter les
+    # connexions après le démarrage. On réessaie plutôt que d'abandonner.
+    for tentative in range(1, 16):
+        try:
+            db_init()
+            print("Base de données prête (clients, mécaniciens, flotte, relevés, "
+                  "ordres, alertes, diagnostics).")
+            break
+        except Exception as e:
+            print(f"BD pas encore prête (essai {tentative}/15) : {e}")
+            time.sleep(2)
+    else:
+        print("BD injoignable après 15 essais — l'API démarre sans tables.")
 else:
     print("Pas de DATABASE_URL — API sans persistance (mode dégradé).")
 
