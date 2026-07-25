@@ -57,3 +57,11 @@ services:
 
 volumes:
   donnees_pg:
+
+# MTU réduit : VirtualBox (NAT) bloque la découverte de MTU, ce qui fait
+# « stagner » les gros paquets (ex. réponses de l'API Groq) jusqu'au timeout.
+# 1400 laisse une marge suffisante pour la sortie internet des conteneurs.
+networks:
+  default:
+    driver_opts:
+      com.docker.network.driver.mtu: "1400"
