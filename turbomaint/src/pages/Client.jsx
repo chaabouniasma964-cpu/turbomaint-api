@@ -19,6 +19,7 @@ import {
   removeMoteur,
   updateMoteurDiag,
   getHistorique,
+  getReleves,
 } from '../lib/moteurs.js'
 import {
   getAlertes,
@@ -332,6 +333,28 @@ export default function Client() {
 
   // Saisie des 14 valeurs capteurs du moteur
   const [valeurs, setValeurs] = useState({})
+
+  // Auto-remplissage des 2 capteurs mesurés par l'ESP32 (s2 = température, s7 = pression)
+  const [esp32Info, setEsp32Info] = useState('')
+  useEffect(() => {
+    if (!moteur) return
+    let actif = true
+    const charger = async () => {
+      try {
+        const releves = await getReleves(email, moteur.id)
+        const dernier = releves?.[releves.length - 1]
+        if (actif && Array.isArray(dernier) && dernier.length >= 2) {
+          setValeurs((v) => ({ ...v, s2: String(dernier[0]), s7: String(dernier[1]) }))
+          setEsp32Info(`Capteurs ESP32 reçus · s2 = ${dernier[0]} · s7 = ${dernier[1]}`)
+        }
+      } catch {
+        /* pas de relevé ESP32 : on laisse la saisie manuelle */
+      }
+    }
+    charger()
+    const t = setInterval(charger, 5000) // rafraîchit toutes les 5 s
+    return () => { actif = false; clearInterval(t) }
+  }, [moteur?.id, email])
 
   const executerDiagnostic = async (file) => {
     setDiagEnCours(true)
@@ -832,6 +855,11 @@ export default function Client() {
 
                   {/* Saisie des valeurs des 14 capteurs (noms réels) */}
                   <div className="px-6 py-5">
+                      <div className="mb-4 rounded-md border border-sky-400/30 bg-sky-400/10 px-3 py-2 text-xs text-sky-200">
+                        🛰️ Les capteurs <b>s2</b> (température) et <b>s7</b> (pression) sont remplis
+                        automatiquement depuis l’ESP32. Saisissez manuellement les 12 autres.
+                        {esp32Info && <span className="mt-1 block text-sky-300/80">{esp32Info}</span>}
+                      </div>
                       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                         {CAPTEURS.map(([code, nom, signification]) => (
                           <div key={code}>
