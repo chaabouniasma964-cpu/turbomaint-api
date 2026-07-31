@@ -82,6 +82,11 @@ const etatLiveStyle = {
 // Les 14 capteurs utilisés par les modèles, avec leur nom réel d'ingénierie.
 // [code interne, nom réel, signification] — l'ordre = colonnes envoyées à l'API.
 // Ce sont les mêmes valeurs que remontera l'équipement embarqué (Raspberry Pi).
+// Source ESP32 partagée : mêmes capteurs live pour TOUS les clients et TOUS les moteurs.
+// L'ESP32 poste vers /releves/LIVE avec ce client fixe ; le site lit toujours cette source.
+const ESP32_CLIENT = 'esp32@turbomaint.local'
+const ESP32_MOTEUR = 'LIVE'
+
 const CAPTEURS = [
   ['s2', 'T24', 'Température sortie compresseur BP'],
   ['s3', 'T30', 'Température sortie compresseur HP'],
@@ -341,7 +346,7 @@ export default function Client() {
     let actif = true
     const charger = async () => {
       try {
-        const releves = await getReleves(email, moteur.id)
+        const releves = await getReleves(ESP32_CLIENT, ESP32_MOTEUR)
         const dernier = releves?.[releves.length - 1]
         if (actif && Array.isArray(dernier) && dernier.length >= 2) {
           setValeurs((v) => ({ ...v, s2: String(dernier[0]), s7: String(dernier[1]) }))
@@ -354,7 +359,7 @@ export default function Client() {
     charger()
     const t = setInterval(charger, 5000) // rafraîchit toutes les 5 s
     return () => { actif = false; clearInterval(t) }
-  }, [moteur?.id, email])
+  }, [moteur?.id])
 
   const executerDiagnostic = async (file) => {
     setDiagEnCours(true)
