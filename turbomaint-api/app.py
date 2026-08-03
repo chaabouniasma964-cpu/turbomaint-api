@@ -40,6 +40,17 @@ W        = CFG["WINDOW"]
 RUL_CAP  = CFG["RUL_CAP"]
 LABELS   = ["Sain", "Dégradation", "Critique"]
 
+# Ordre de sévérité des états (pour réconcilier l'état modèle avec le RUL).
+SEVERITE = {"Sain": 0, "Dégradation": 1, "Critique": 2}
+
+def etat_selon_rul(rul):
+    """État déduit du nombre de vols restants (seuils config_deploy.json)."""
+    if rul <= CFG["SEUIL_CRITIQUE"]:
+        return "Critique"
+    if rul <= CFG["SEUIL_DEGRADATION"]:
+        return "Dégradation"
+    return "Sain"
+
 SENSOR_INFO = {
     "s2": "T24 temp. sortie compresseur BP", "s3": "T30 temp. sortie compresseur HP",
     "s4": "T50 temp. sortie turbine BP",     "s7": "P30 pression sortie compresseur HP",
@@ -177,6 +188,9 @@ def db_init():
         # Colonne ajoutée après coup : idempotent pour les bases existantes.
         cur.execute("ALTER TABLE clients ADD COLUMN IF NOT EXISTS "
                     "statut TEXT NOT NULL DEFAULT 'Actif'")
+        # Rattache chaque diagnostic au client qui l'a lancé (historique par client).
+        cur.execute("ALTER TABLE diagnostics ADD COLUMN IF NOT EXISTS "
+                    "client_email TEXT")
 
         for m in SEED_MECANICIENS:
             cur.execute("INSERT INTO mecaniciens (id, nom, specialite, disponible, "
@@ -191,20 +205,20 @@ def db_save_diagnostic(diag):
         try:
             with _db() as conn, conn.cursor() as cur:
                 cur.execute(
-                    "INSERT INTO diagnostics (moteur, rul_predit, etat, confiance, "
-                    "fiable, details) VALUES (%s, %s, %s, %s, %s, %s)",
-                    (diag["moteur"], diag["rul_predit"], diag["etat_predit"],
-                     diag["confiance"], diag["fiable"],
+                    "INSERT INTO diagnostics (moteur, client_email, rul_predit, etat, "
+                    "confiance, fiable, details) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                    (diag["moteur"], diag.get("client_email"), diag["rul_predit"],
+                     diag["etat_predit"], diag["confiance"], diag["fiable"],
                      json.dumps(diag, ensure_ascii=False)))
         except Exception:
             # La BD démarrait peut-être encore : (re)créer la table et réessayer
             db_init()
             with _db() as conn, conn.cursor() as cur:
                 cur.execute(
-                    "INSERT INTO diagnostics (moteur, rul_predit, etat, confiance, "
-                    "fiable, details) VALUES (%s, %s, %s, %s, %s, %s)",
-                    (diag["moteur"], diag["rul_predit"], diag["etat_predit"],
-                     diag["confiance"], diag["fiable"],
+                    "INSERT INTO diagnostics (moteur, client_email, rul_predit, etat, "
+                    "confiance, fiable, details) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                    (diag["moteur"], diag.get("client_email"), diag["rul_predit"],
+                     diag["etat_predit"], diag["confiance"], diag["fiable"],
                      json.dumps(diag, ensure_ascii=False)))
     except Exception as e:
         print(f"BD : sauvegarde impossible ({e}) — diagnostic non persisté.")
@@ -263,7 +277,7 @@ def capteurs_suspects(fenetre, top_k=3):
 # ---------------------------------------------------------------------------
 live_registry = {}
 
-def diagnostiquer_nouveau_moteur(engine_id, donnees_brutes):
+def diagnostiquer_nouveau_moteur(engine_id, donnees_brutes, client=None):
     manquants = [f for f in FEATURES if f not in donnees_brutes.columns]
     if manquants:
         raise ValueError(f"Colonnes capteurs manquantes : {manquants}")
@@ -293,7 +307,15 @@ def diagnostiquer_nouveau_moteur(engine_id, donnees_brutes):
     probas = m2.predict(fen)
     etat, conf = LABELS[int(np.argmax(probas))], float(probas.max())
 
+    # Réconciliation état / RUL : un moteur avec très peu de vols restants ne peut
+    # pas être « Sain ». On retient toujours l'état le plus sévère entre celui du
+    # modèle (M2) et celui déduit du RUL (M1), pour éviter les verdicts incohérents.
+    etat_rul = etat_selon_rul(rul)
+    if SEVERITE[etat_rul] > SEVERITE[etat]:
+        etat = etat_rul
+
     diag = {"moteur": str(engine_id), "rul_predit": round(rul, 1),
+            "client_email": client,
             "intervalle": [round(max(0, rul - MAE_MODELE)), round(rul + MAE_MODELE)],
             "etat_predit": etat, "confiance": round(conf, 3),
             "nb_cycles_fournis": int(n_cycles),
@@ -646,11 +668,12 @@ def chat(body: ChatIn):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/diagnose")
-async def diagnose(file: UploadFile = File(...), engine_id: str = Form(...)):
+async def diagnose(file: UploadFile = File(...), engine_id: str = Form(...),
+                   client: str | None = Form(None)):
     try:
         content = await file.read()
         df = pd.read_csv(io.BytesIO(content))
-        diag = diagnostiquer_nouveau_moteur(engine_id, df)
+        diag = diagnostiquer_nouveau_moteur(engine_id, df, client=client)
         return {"diagnostic": diag, "briefing": briefing_auto(engine_id)}
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -671,20 +694,29 @@ def rapport(engine_id: str):
                         filename=f"rapport_{engine_id}.pdf")
 
 @app.get("/historique")
-def historique(moteur: str | None = None, limit: int = 50):
-    """Diagnostics passés enregistrés en base (nécessite DATABASE_URL)."""
+def historique(moteur: str | None = None, client: str | None = None,
+               limit: int = 50):
+    """Diagnostics passés enregistrés en base (nécessite DATABASE_URL).
+
+    Filtrable par `client` (email) pour n'exposer à chaque client que ses
+    propres analyses, et/ou par `moteur`."""
     if not DATABASE_URL:
         raise HTTPException(status_code=501,
                             detail="Base de données non configurée sur ce déploiement.")
     try:
+        conditions, params = [], []
+        if moteur:
+            conditions.append("moteur = %s")
+            params.append(moteur)
+        if client:
+            conditions.append("client_email = %s")
+            params.append(client)
+        where = (" WHERE " + " AND ".join(conditions)) if conditions else ""
+        params.append(limit)
         with _db() as conn, conn.cursor() as cur:
-            if moteur:
-                cur.execute("SELECT moteur, date, rul_predit, etat, confiance, fiable "
-                            "FROM diagnostics WHERE moteur = %s "
-                            "ORDER BY date DESC LIMIT %s", (moteur, limit))
-            else:
-                cur.execute("SELECT moteur, date, rul_predit, etat, confiance, fiable "
-                            "FROM diagnostics ORDER BY date DESC LIMIT %s", (limit,))
+            cur.execute("SELECT moteur, date, rul_predit, etat, confiance, fiable "
+                        "FROM diagnostics" + where +
+                        " ORDER BY date DESC LIMIT %s", tuple(params))
             rows = cur.fetchall()
         return {"historique": [
             {"moteur": r[0], "date": r[1].isoformat(), "rul_predit": r[2],

@@ -71,8 +71,8 @@ export function clearReleves(email, moteurId) {
 // ---------- Historique des analyses ----------
 // Dérivé de la table `diagnostics` côté API. Forme frontend :
 // { moteur, rul, etat, confiance, fiable, dateISO }.
-export async function getHistorique(moteur = null) {
-  const rows = await apiHistorique(moteur)
+export async function getHistorique(email = null, moteur = null) {
+  const rows = await apiHistorique(moteur, email)
   return rows.map((r) => ({
     moteur: r.moteur,
     rul: r.rul_predit,

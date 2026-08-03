@@ -133,6 +133,7 @@ function nettoyerBriefing(txt) {
     .filter((l) => !/pr[ée]diction indicative|cycle.? fourni|plus de cycles/i.test(l))
     .join('\n')
     .replace(/\*\*/g, '')
+    .replace(/\bVerdict\s*:\s*/gi, '') // on n'affiche pas l'étiquette « Verdict : »
     .replace(/\(intervalle[^)]*\)/gi, '')
     .replace(/\bcycles?\b/gi, (m) => (m[0] === 'C' ? 'Vols' : 'vols'))
     .replace(/[ \t]{2,}/g, ' ')
@@ -236,7 +237,7 @@ export default function Client() {
   // Chargements (depuis l'API)
   const rechargerFlotte = async () => {
     if (!email) return
-    const [ms, hs] = await Promise.all([getMoteurs(email), getHistorique()])
+    const [ms, hs] = await Promise.all([getMoteurs(email), getHistorique(email)])
     setMoteurs(ms)
     setHistorique(hs)
     setMoteur((prev) =>
@@ -297,7 +298,7 @@ export default function Client() {
   }
 
   // Formulaire d'ajout de moteur
-  const [formMoteur, setFormMoteur] = useState({ id: '', modele: '', miseEnService: '', cyclesCumules: '' })
+  const [formMoteur, setFormMoteur] = useState({ id: '', modele: '', miseEnService: '' })
   const [erreurMoteur, setErreurMoteur] = useState('')
 
   const ajouterMoteur = async () => {
@@ -314,7 +315,7 @@ export default function Client() {
       })
       setMoteurs(liste)
       if (!moteur) setMoteur(liste[liste.length - 1])
-      setFormMoteur({ id: '', modele: '', miseEnService: '', cyclesCumules: '' })
+      setFormMoteur({ id: '', modele: '', miseEnService: '' })
       setErreurMoteur('')
     } catch (e) {
       setErreurMoteur(e.message)
@@ -366,7 +367,7 @@ export default function Client() {
     setErreurDiag('')
     setResultat(null)
     try {
-      const res = await diagnoseEngine(file, moteur.id)
+      const res = await diagnoseEngine(file, moteur.id, email)
       setResultat(res)
       const d = res.diagnostic
       // Analyse précédente du même moteur (avant mise à jour) pour comparaison
@@ -381,8 +382,8 @@ export default function Client() {
       // Alertes intelligentes (créées en base), puis rechargement
       await genererAlertesDiagnostic(email, d, precedent)
       await rechargerAlertes()
-      // L'historique est dérivé des diagnostics enregistrés côté API
-      setHistorique(await getHistorique())
+      // L'historique est dérivé des diagnostics enregistrés côté API (ce client)
+      setHistorique(await getHistorique(email))
     } catch (e) {
       setErreurDiag(`Diagnostic impossible : ${e.message}`)
     } finally {
@@ -474,6 +475,9 @@ export default function Client() {
     iso ? new Date(iso).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '—'
 
   const dResultat = resultat?.diagnostic
+  // État affiché = déduit du RUL (vols restants) pour rester cohérent avec le
+  // verdict : un moteur avec très peu de vols restants ne peut pas être « Sain ».
+  const etatAffiche = dResultat ? classifierRUL(dResultat.rul_predit) : null
   // Ordre de maintenance actif du moteur sélectionné (le cas échéant)
   const ordreMoteurCourant = moteur
     ? ordres.find((o) => o.moteurId === moteur.id && o.statut !== 'clos') || null
@@ -651,7 +655,7 @@ export default function Client() {
                 Créez la fiche du moteur. Ses relevés capteurs (14 capteurs, un CSV par période
                 d’exploitation) seront ensuite uploadés dans l’onglet Diagnostic.
               </p>
-              <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 <div>
                   <label className="mb-2 block text-sm text-white/70">Identifiant *</label>
                   <input
@@ -679,17 +683,6 @@ export default function Client() {
                     value={formMoteur.miseEnService}
                     onChange={(e) => setFormMoteur({ ...formMoteur, miseEnService: e.target.value })}
                     className={`${inputClass} [color-scheme:dark]`}
-                  />
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm text-white/70">Vols effectués</label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={formMoteur.cyclesCumules}
-                    onChange={(e) => setFormMoteur({ ...formMoteur, cyclesCumules: e.target.value })}
-                    placeholder="ex. 340"
-                    className={inputClass}
                   />
                 </div>
               </div>
@@ -738,7 +731,6 @@ export default function Client() {
                           ) : (
                             <span className="text-white/40">Pas encore analysé</span>
                           )}
-                          {m.cyclesCumules != null && <> · ~{m.cyclesCumules} vols cumulés</>}
                           {m.miseEnService && <> · en service depuis le {fmtDate(m.miseEnService)}</>}
                         </div>
                       </div>
@@ -921,14 +913,14 @@ export default function Client() {
                       {/* Verdict — phrase claire */}
                       <div>
                         <div className="mb-2 flex items-center gap-3">
-                          <span className={`inline-block rounded-full border px-3 py-1 text-xs font-semibold ${etatLiveStyle[dResultat.etat_predit] || ''}`}>
-                            {dResultat.etat_predit}
+                          <span className={`inline-block rounded-full border px-3 py-1 text-xs font-semibold ${etatLiveStyle[etatAffiche] || ''}`}>
+                            {etatAffiche}
                           </span>
                           <span className="text-xs uppercase tracking-wider text-white/40">Résultat du diagnostic</span>
                         </div>
                         <p className="text-sm leading-relaxed text-white/90">
                           Le moteur <span className="font-mono text-white">{dResultat.moteur}</span> est
-                          en état <b className="text-white">{dResultat.etat_predit}</b>. Il reste
+                          en état <b className="text-white">{etatAffiche}</b>. Il reste
                           {' '}<b className="text-white">~{Math.round(dResultat.rul_predit)} vols</b> avant
                           la panne ; prévoyez l’intervention avant{' '}
                           <b className="text-white">{Math.max(0, Math.round(dResultat.rul_predit - 10))} vols</b>{' '}
@@ -1214,7 +1206,7 @@ export default function Client() {
                         </div>
                         <div className="mt-1 text-xs text-white/60">
                           Vols restants : <span className="font-medium text-white/90">{row.rul} vols</span>
-                          {row.etat && <> · état modèle : {row.etat}</>}
+                          {' · '}état : {niveau}
                           {row.confiance != null && <> · confiance {Math.round(row.confiance * 100)}%</>}
                         </div>
                         {/* Mini barre de progression RUL */}

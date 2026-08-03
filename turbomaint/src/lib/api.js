@@ -57,10 +57,11 @@ export async function askAssistant(question, engineId = null) {
 }
 
 /** Diagnostic live d'un nouveau moteur à partir d'un CSV de relevés bruts. */
-export async function diagnoseEngine(file, engineId) {
+export async function diagnoseEngine(file, engineId, client = null) {
   const form = new FormData()
   form.append('file', file)
   form.append('engine_id', engineId)
+  if (client) form.append('client', client)
   const r = await fetch(`${API_URL}/diagnose`, { method: 'POST', body: form })
   if (!r.ok) {
     const err = await r.json().catch(() => ({}))
@@ -136,5 +137,11 @@ export const apiMarquerAlerteLue = (id) => req('PATCH', `/alertes/${enc(id)}/lu`
 export const apiSupprimerAlerte = (id) => req('DELETE', `/alertes/${enc(id)}`)
 
 // ---- Historique des diagnostics ----
-export const apiHistorique = (moteur) =>
-  req('GET', `/historique${moteur ? '?moteur=' + enc(moteur) : ''}`).then((d) => d.historique)
+// Filtrable par moteur et/ou par client (email) — un client ne voit que ses analyses.
+export const apiHistorique = (moteur, client) => {
+  const params = new URLSearchParams()
+  if (moteur) params.set('moteur', moteur)
+  if (client) params.set('client', client)
+  const q = params.toString()
+  return req('GET', `/historique${q ? '?' + q : ''}`).then((d) => d.historique)
+}
