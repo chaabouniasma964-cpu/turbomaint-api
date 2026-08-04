@@ -340,8 +340,9 @@ export default function Client() {
   // Saisie des 14 valeurs capteurs du moteur
   const [valeurs, setValeurs] = useState({})
 
-  // Auto-remplissage des 2 capteurs mesurés par l'ESP32 (s2 = température, s7 = pression)
-  const [esp32Info, setEsp32Info] = useState('')
+  // Auto-remplissage des 2 capteurs mesurés par l'ESP32.
+  // On les mappe sur W31 (s20) et W32 (s21) : dans le dataset ces capteurs ont
+  // toujours des valeurs faibles (< 100), compatibles avec ce que mesure l'ESP32.
   useEffect(() => {
     if (!moteur) return
     let actif = true
@@ -350,8 +351,7 @@ export default function Client() {
         const releves = await getReleves(ESP32_CLIENT, ESP32_MOTEUR)
         const dernier = releves?.[releves.length - 1]
         if (actif && Array.isArray(dernier) && dernier.length >= 2) {
-          setValeurs((v) => ({ ...v, s2: String(dernier[0]), s7: String(dernier[1]) }))
-          setEsp32Info(`Capteurs ESP32 reçus · s2 = ${dernier[0]} · s7 = ${dernier[1]}`)
+          setValeurs((v) => ({ ...v, s20: String(dernier[0]), s21: String(dernier[1]) }))
         }
       } catch {
         /* pas de relevé ESP32 : on laisse la saisie manuelle */
@@ -843,20 +843,10 @@ export default function Client() {
                     <h2 className="text-lg font-semibold text-white">
                       Relevés capteurs de <span className="font-mono text-sky-300">{moteur?.id}</span>
                     </h2>
-                    <p className="mt-2 text-xs text-white/50">
-                      Saisissez la valeur relevée sur chacun des 14 capteurs, puis lancez
-                      le diagnostic. Ce sont les mêmes mesures que remontera votre
-                      équipement embarqué (Raspberry Pi) via l’API.
-                    </p>
                   </div>
 
                   {/* Saisie des valeurs des 14 capteurs (noms réels) */}
                   <div className="px-6 py-5">
-                      <div className="mb-4 rounded-md border border-sky-400/30 bg-sky-400/10 px-3 py-2 text-xs text-sky-200">
-                        🛰️ Les capteurs <b>s2</b> (température) et <b>s7</b> (pression) sont remplis
-                        automatiquement depuis l’ESP32. Saisissez manuellement les 12 autres.
-                        {esp32Info && <span className="mt-1 block text-sky-300/80">{esp32Info}</span>}
-                      </div>
                       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                         {CAPTEURS.map(([code, nom, signification]) => (
                           <div key={code}>
