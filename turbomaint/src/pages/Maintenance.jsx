@@ -121,10 +121,6 @@ export default function Maintenance() {
             >
               Se connecter
             </button>
-            <p className="text-center text-xs text-white/35">
-              Démo : login <span className="font-mono">karim</span> · mot de passe{' '}
-              <span className="font-mono">mec123</span>
-            </p>
           </div>
         </div>
       </main>

@@ -10,16 +10,16 @@ import { apiInscrireClient, apiConnecterClient } from './api.js'
 const USER_KEY = 'turbomaint_user'
 const VISIT_KEY = 'turbomaint_firstVisitDone'
 
-// Inscription : crée le compte en base, puis ouvre la session locale.
+// Inscription : crée le compte en base avec le statut « En attente ».
+// AUCUNE session n'est ouverte : le client ne pourra se connecter qu'une fois
+// son compte accepté par l'administrateur.
 export async function inscrireClient({ nom, email, telephone, motDePasse }) {
-  const user = await apiInscrireClient({
+  return apiInscrireClient({
     email,
     nom,
     telephone,
     mot_de_passe: motDePasse,
   })
-  saveUser(user)
-  return user
 }
 
 // Connexion : vérifie les identifiants en base, puis ouvre la session locale.

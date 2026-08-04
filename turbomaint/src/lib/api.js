@@ -104,6 +104,9 @@ export const apiSetDispoMecanicien = (id, disponible) =>
 // ---- Flotte (moteurs du client) ----
 export const apiListeFlotte = (client) =>
   req('GET', `/flotte?client=${enc(client)}`).then((d) => d.moteurs)
+// Vue admin : tous les moteurs de tous les clients (avec le nom du client).
+export const apiListeFlotteGlobale = () =>
+  req('GET', '/flotte/all').then((d) => d.moteurs)
 export const apiAjouterMoteur = (m) => req('POST', '/flotte', m) // {client, id, modele, mise_en_service}
 export const apiSupprimerMoteur = (client, id) =>
   req('DELETE', `/flotte/${enc(id)}?client=${enc(client)}`)

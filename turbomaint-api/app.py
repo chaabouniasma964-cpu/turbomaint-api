@@ -807,17 +807,28 @@ def creer_client(c: ClientIn):
     _besoin_bd()
     if _run("SELECT email FROM clients WHERE email=%s", (c.email,), "one"):
         raise HTTPException(status_code=409, detail="Un compte existe déjà avec cet email.")
-    _run("INSERT INTO clients (email, nom, telephone, mot_de_passe) VALUES (%s,%s,%s,%s)",
-         (c.email, c.nom, c.telephone, c.mot_de_passe))
-    return {"email": c.email, "nom": c.nom, "telephone": c.telephone}
+    # Nouveau compte : « En attente » — il ne pourra se connecter qu'une fois
+    # accepté par l'administrateur depuis la console.
+    _run("INSERT INTO clients (email, nom, telephone, mot_de_passe, statut) "
+         "VALUES (%s,%s,%s,%s,%s)",
+         (c.email, c.nom, c.telephone, c.mot_de_passe, "En attente"))
+    return {"email": c.email, "nom": c.nom, "telephone": c.telephone,
+            "statut": "En attente"}
 
 @app.post("/clients/login")
 def login_client(c: LoginIn):
     _besoin_bd()
-    row = _run("SELECT email, nom, telephone, mot_de_passe FROM clients WHERE email=%s",
+    row = _run("SELECT email, nom, telephone, mot_de_passe, statut FROM clients WHERE email=%s",
                (c.email,), "one")
     if not row or row["mot_de_passe"] != c.mot_de_passe:
         raise HTTPException(status_code=401, detail="Email ou mot de passe incorrect.")
+    # Accès réservé aux comptes validés par l'administrateur.
+    if row["statut"] != "Actif":
+        if row["statut"] == "Suspendu":
+            raise HTTPException(status_code=403,
+                detail="Votre compte a été suspendu. Contactez l'administrateur.")
+        raise HTTPException(status_code=403,
+            detail="Votre compte est en attente de validation par l'administrateur.")
     return {"email": row["email"], "nom": row["nom"], "telephone": row["telephone"]}
 
 @app.get("/clients")
@@ -902,6 +913,16 @@ def liste_flotte(client: str):
     _besoin_bd()
     return {"moteurs": _run("SELECT id, modele, mise_en_service, rul, etat, dernier_diag "
                             "FROM flotte WHERE client_email=%s ORDER BY id", (client,), "all")}
+
+@app.get("/flotte/all")
+def liste_flotte_globale():
+    """Vue admin : tous les moteurs de tous les clients (avec le nom du client)."""
+    _besoin_bd()
+    return {"moteurs": _run(
+        "SELECT f.id, f.client_email, c.nom AS client_nom, f.modele, "
+        "       f.rul, f.etat, f.dernier_diag "
+        "FROM flotte f LEFT JOIN clients c ON c.email = f.client_email "
+        "ORDER BY f.dernier_diag DESC NULLS LAST, f.id", (), "all")}
 
 @app.post("/flotte")
 def ajouter_moteur(mo: MoteurIn):

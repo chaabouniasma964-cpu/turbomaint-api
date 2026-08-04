@@ -6,6 +6,7 @@
 // ============================================================
 import {
   apiListeFlotte,
+  apiListeFlotteGlobale,
   apiAjouterMoteur,
   apiSupprimerMoteur,
   apiMajMoteurDiag,
@@ -30,6 +31,16 @@ const versFront = (m) => ({
 export async function getMoteurs(email) {
   const liste = await apiListeFlotte(email)
   return liste.map(versFront)
+}
+
+// Vue admin : tous les moteurs de tous les clients (avec le client rattaché).
+export async function getMoteursAdmin() {
+  const liste = await apiListeFlotteGlobale()
+  return liste.map((m) => ({
+    ...versFront(m),
+    clientEmail: m.client_email,
+    clientNom: m.client_nom,
+  }))
 }
 
 /** Ajoute un moteur { id, modele, miseEnService }. Refuse les doublons. */

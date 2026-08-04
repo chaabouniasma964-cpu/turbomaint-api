@@ -190,10 +190,13 @@ export default function Home() {
     phone: '',
   })
   const [erreur, setErreur] = useState('')
+  // Message d'information (ex. compte en attente de validation) affiché en vert/ambre.
+  const [infoMsg, setInfoMsg] = useState('')
 
   const fermer = () => {
     setModal(null)
     setErreur('')
+    setInfoMsg('')
   }
 
   const EMAIL_RE = /^\S+@\S+\.\S+$/
@@ -239,7 +242,8 @@ export default function Home() {
       setErreur('Le numéro de téléphone est obligatoire.')
       return
     }
-    // Inscription : crée le compte en base (PostgreSQL) puis ouvre le portail.
+    // Inscription : crée le compte (statut « En attente »). Le client NE PEUT PAS
+    // encore accéder au portail : l'administrateur doit d'abord valider le compte.
     try {
       await inscrireClient({
         nom: signup.nom.trim(),
@@ -248,7 +252,14 @@ export default function Home() {
         motDePasse: signup.password,
       })
       markSignup()
-      navigate('/portail')
+      setSignup({ nom: '', email: '', password: '', confirm: '', phone: '' })
+      setErreur('')
+      setInfoMsg(
+        'Votre compte a bien été créé. Il doit être validé par l’administrateur ' +
+        'avant votre première connexion. Vous pourrez ensuite vous connecter avec ' +
+        'votre email et votre mot de passe.'
+      )
+      setModal('signin')
     } catch (e) {
       setErreur(e.message || 'Inscription impossible.')
     }
@@ -480,6 +491,11 @@ export default function Home() {
                 🔒 Un compte est nécessaire pour accéder au portail client.
               </div>
             )}
+            {infoMsg && (
+              <div className="mb-5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300">
+                ✅ {infoMsg}
+              </div>
+            )}
             {modal === 'signin' ? (
               <>
                 <h2 className="text-2xl font-bold text-white">Sign in</h2>
@@ -529,6 +545,7 @@ export default function Home() {
                     <button
                       onClick={() => {
                         setErreur('')
+                        setInfoMsg('')
                         setModal('signup')
                       }}
                       className="font-semibold text-white underline hover:no-underline"

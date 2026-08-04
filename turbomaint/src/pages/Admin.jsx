@@ -7,26 +7,13 @@ import {
   niveauHex,
 } from '../lib/diagnostic.js'
 import { getMecaniciens, addMecanicien, getOrdres } from '../lib/atelier.js'
+import { getMoteursAdmin } from '../lib/moteurs.js'
 import { apiListeClients, apiMajStatutClient, apiSupprimerClient } from '../lib/api.js'
 import { IconeUtilisateur } from '../components/Icones.jsx'
 
-// Moteurs : on ne stocke que l'ID et le RUL prédit ; le niveau est
-// dérivé par le module de diagnostic IA (cohérence garantie).
-const enginesRaw = [
-  { id: 'FD001-012', rul: 118 },
-  { id: 'FD001-047', rul: 64 },
-  { id: 'FD001-003', rul: 22 },
-  { id: 'FD001-088', rul: 101 },
-  { id: 'FD001-056', rul: 38 },
-  { id: 'FD001-071', rul: 14 },
-  { id: 'FD001-029', rul: 95 },
-  { id: 'FD001-064', rul: 47 },
-  { id: 'FD001-015', rul: 130 },
-  { id: 'FD001-082', rul: 55 },
-  { id: 'FD001-007', rul: 31 },
-  { id: 'FD001-093', rul: 9 },
-]
-const engines = enginesRaw.map((e) => ({ ...e, niveau: classifierRUL(e.rul) }))
+// Niveau d'un moteur : dérivé du RUL prédit (cohérence garantie avec le portail
+// client). `null` tant qu'aucun diagnostic n'a été lancé sur le moteur.
+const niveauDe = (rul) => (rul != null ? classifierRUL(rul) : null)
 
 const navItems = ['Vue d’ensemble', 'Clients', 'Moteurs', 'Mécaniciens']
 
@@ -132,6 +119,18 @@ function Overview() {
   const [filtre, setFiltre] = useState('TOUS')
   const [tri, setTri] = useState('rul-asc')
 
+  // Moteurs réels de tous les clients (base PostgreSQL via l'API).
+  const [engines, setEngines] = useState([])
+  const [clients, setClients] = useState([])
+  const [mecs, setMecs] = useState([])
+  useEffect(() => {
+    getMoteursAdmin()
+      .then((liste) => setEngines(liste.map((e) => ({ ...e, niveau: niveauDe(e.rul) }))))
+      .catch(() => {})
+    apiListeClients().then(setClients).catch(() => {})
+    getMecaniciens().then(setMecs).catch(() => {})
+  }, [])
+
   const niveaux = ['Sain', 'Dégradation', 'Critique']
   const repartition = niveaux.map((n) => ({
     label: n,
@@ -139,35 +138,38 @@ function Overview() {
     color: niveauHex[n],
   }))
 
-  // Indicateurs de la plateforme : clients, moteurs, équipe maintenance
-  const [clients, setClients] = useState([])
-  const [mecs, setMecs] = useState([])
-  useEffect(() => {
-    apiListeClients().then(setClients).catch(() => {})
-    getMecaniciens().then(setMecs).catch(() => {})
-  }, [])
-
   const clientsActifs = clients.filter((c) => c.statut === 'Actif').length
-  const clientsEnAttente = clients.length - clientsActifs
+  const clientsEnAttente = clients.filter((c) => c.statut === 'En attente').length
+  const analyses = engines.filter((e) => e.rul != null).length
   const kpis = [
     { label: 'Clients actifs', value: clientsActifs, sub: `sur ${clients.length} comptes` },
-    { label: 'Clients en attente', value: clientsEnAttente, sub: 'comptes suspendus' },
-    { label: 'Moteurs suivis', value: engines.length, sub: 'flotte supervisée' },
+    { label: 'Clients en attente', value: clientsEnAttente, sub: 'à valider' },
+    { label: 'Moteurs suivis', value: engines.length, sub: `${analyses} analysés` },
     { label: 'Mécaniciens', value: mecs.length, sub: `${mecs.filter((m) => m.disponible).length} disponibles` },
   ]
 
   const moteursAffiches = useMemo(() => {
-    let list = engines.filter((e) => e.id.toLowerCase().includes(recherche.toLowerCase()))
+    const q = recherche.toLowerCase()
+    let list = engines.filter(
+      (e) => e.id.toLowerCase().includes(q) || (e.clientNom || e.clientEmail || '').toLowerCase().includes(q)
+    )
     if (filtre !== 'TOUS') list = list.filter((e) => e.niveau === filtre)
-    list = [...list].sort((a, b) => (tri === 'rul-asc' ? a.rul - b.rul : b.rul - a.rul))
+    // Tri par RUL, les moteurs non analysés (rul null) toujours en fin de liste.
+    list = [...list].sort((a, b) => {
+      if (a.rul == null) return 1
+      if (b.rul == null) return -1
+      return tri === 'rul-asc' ? a.rul - b.rul : b.rul - a.rul
+    })
     return list
-  }, [recherche, filtre, tri])
+  }, [engines, recherche, filtre, tri])
 
   const exporterCSV = () => {
-    const head = ['ID', 'RUL', 'Niveau', 'Maintenance estimée']
+    const head = ['ID', 'Client', 'RUL', 'Niveau', 'Maintenance estimée']
     const lignes = moteursAffiches.map((e) => {
+      const client = e.clientNom || e.clientEmail || ''
+      if (e.rul == null) return [e.id, client, '', 'Non analysé', ''].join(',')
       const d = diagnostiquer(e.rul)
-      return [e.id, e.rul, d.niveau, d.dateMaintenance].join(',')
+      return [e.id, client, e.rul, d.niveau, d.dateMaintenance].join(',')
     })
     const csv = [head.join(','), ...lignes].join('\n')
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
@@ -234,25 +236,36 @@ function Overview() {
             </button>
           </div>
 
-          <div className="overflow-hidden rounded-xl border border-white/10">
-            <table className="w-full text-left text-sm">
+          <div className="overflow-x-auto rounded-xl border border-white/10">
+            <table className="w-full min-w-[640px] text-left text-sm">
               <thead className="bg-neutral-900 text-white/50">
                 <tr>
                   <th className="px-5 py-3 font-medium uppercase tracking-wider">ID moteur</th>
+                  <th className="px-5 py-3 font-medium uppercase tracking-wider">Client</th>
                   <th className="px-5 py-3 font-medium uppercase tracking-wider">RUL</th>
-                  <th className="px-5 py-3 font-medium uppercase tracking-wider">Niveau</th>
+                  <th className="px-5 py-3 font-medium uppercase tracking-wider">État</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5 bg-neutral-950">
                 {moteursAffiches.map((e) => (
-                  <tr key={e.id} className="transition hover:bg-white/5">
+                  <tr key={`${e.clientEmail}-${e.id}`} className="transition hover:bg-white/5">
                     <td className="px-5 py-3.5 font-mono text-white">{e.id}</td>
-                    <td className="px-5 py-3.5 text-white/80">{e.rul}</td>
+                    <td className="px-5 py-3.5 text-white/80">
+                      {e.clientNom || e.clientEmail || '—'}
+                    </td>
+                    <td className="px-5 py-3.5 text-white/80">{e.rul != null ? e.rul : '—'}</td>
                     <td className="px-5 py-3.5">
-                      <span className={`inline-block rounded-full border px-3 py-1 text-xs font-semibold ${niveauStyle[e.niveau]}`}>{e.niveau}</span>
+                      {e.niveau ? (
+                        <span className={`inline-block rounded-full border px-3 py-1 text-xs font-semibold ${niveauStyle[e.niveau]}`}>{e.niveau}</span>
+                      ) : (
+                        <span className="inline-block rounded-full border border-white/15 px-3 py-1 text-xs font-semibold text-white/40">Non analysé</span>
+                      )}
                     </td>
                   </tr>
                 ))}
+                {moteursAffiches.length === 0 && (
+                  <tr><td colSpan={4} className="px-5 py-10 text-center text-white/40">Aucun moteur enregistré par les clients pour l’instant.</td></tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -263,38 +276,65 @@ function Overview() {
   )
 }
 
-/* ---------- VUE MOTEURS (raccourci vers la même table détaillée) ---------- */
+/* ---------- VUE MOTEURS : parc réel de tous les clients ---------- */
 function MoteursView() {
+  const [engines, setEngines] = useState([])
+  const [chargement, setChargement] = useState(true)
+
+  useEffect(() => {
+    getMoteursAdmin()
+      .then((liste) => setEngines(liste.map((e) => ({ ...e, niveau: niveauDe(e.rul) }))))
+      .catch(() => {})
+      .finally(() => setChargement(false))
+  }, [])
+
+  const fmtDate = (iso) =>
+    iso ? new Date(iso).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '—'
+
   return (
     <>
       <header className="mb-8">
         <h1 className="text-2xl font-bold text-white md:text-3xl">Parc moteurs</h1>
-        <p className="mt-1 text-sm text-white/50">Liste complète avec diagnostic IA par moteur.</p>
+        <p className="mt-1 text-sm text-white/50">
+          Tous les moteurs enregistrés par les clients, avec leur état et leur propriétaire.
+        </p>
       </header>
-      <div className="overflow-hidden rounded-xl border border-white/10">
-        <table className="w-full text-left text-sm">
+      <div className="overflow-x-auto rounded-xl border border-white/10">
+        <table className="w-full min-w-[760px] text-left text-sm">
           <thead className="bg-neutral-900 text-white/50">
             <tr>
-              <th className="px-5 py-3 font-medium uppercase tracking-wider">ID</th>
+              <th className="px-5 py-3 font-medium uppercase tracking-wider">Moteur</th>
+              <th className="px-5 py-3 font-medium uppercase tracking-wider">Client</th>
               <th className="px-5 py-3 font-medium uppercase tracking-wider">RUL</th>
-              <th className="px-5 py-3 font-medium uppercase tracking-wider">Niveau</th>
-              <th className="px-5 py-3 font-medium uppercase tracking-wider">Maintenance estimée</th>
+              <th className="px-5 py-3 font-medium uppercase tracking-wider">État</th>
+              <th className="px-5 py-3 font-medium uppercase tracking-wider">Dernière analyse</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5 bg-neutral-950">
-            {engines.map((e) => {
-              const d = diagnostiquer(e.rul)
-              return (
-                <tr key={e.id} className="hover:bg-white/5">
-                  <td className="px-5 py-3.5 font-mono text-white">{e.id}</td>
-                  <td className="px-5 py-3.5 text-white/80">{e.rul}</td>
-                  <td className="px-5 py-3.5">
+            {engines.map((e) => (
+              <tr key={`${e.clientEmail}-${e.id}`} className="hover:bg-white/5">
+                <td className="px-5 py-3.5">
+                  <div className="font-mono text-white">{e.id}</div>
+                  {e.modele && <div className="text-xs text-white/40">{e.modele}</div>}
+                </td>
+                <td className="px-5 py-3.5 text-white/80">
+                  <div>{e.clientNom || '—'}</div>
+                  <div className="text-xs text-white/40">{e.clientEmail}</div>
+                </td>
+                <td className="px-5 py-3.5 text-white/80">{e.rul != null ? `${e.rul} vols` : '—'}</td>
+                <td className="px-5 py-3.5">
+                  {e.niveau ? (
                     <span className={`inline-block rounded-full border px-3 py-1 text-xs font-semibold ${niveauStyle[e.niveau]}`}>{e.niveau}</span>
-                  </td>
-                  <td className="px-5 py-3.5 text-white/70">{d.dateMaintenance}</td>
-                </tr>
-              )
-            })}
+                  ) : (
+                    <span className="inline-block rounded-full border border-white/15 px-3 py-1 text-xs font-semibold text-white/40">Non analysé</span>
+                  )}
+                </td>
+                <td className="px-5 py-3.5 text-white/70">{fmtDate(e.dernierDiag)}</td>
+              </tr>
+            ))}
+            {!chargement && engines.length === 0 && (
+              <tr><td colSpan={5} className="px-5 py-10 text-center text-white/40">Aucun moteur enregistré par les clients pour l’instant.</td></tr>
+            )}
           </tbody>
         </table>
       </div>
@@ -324,29 +364,38 @@ function Clients() {
       await charger()
     }
   }
-  const basculerStatut = async (email) => {
-    const c = clients.find((x) => x.email === email)
-    await apiMajStatutClient(email, c.statut === 'Actif' ? 'Suspendu' : 'Actif')
+  // Change le statut du compte (Actif = accès autorisé, Suspendu / En attente = bloqué).
+  const definirStatut = async (email, statut) => {
+    await apiMajStatutClient(email, statut)
     await charger()
   }
 
+  const badgeStatut = {
+    Actif: 'border-emerald-500/30 bg-emerald-500/15 text-emerald-400',
+    'En attente': 'border-amber-500/30 bg-amber-500/15 text-amber-400',
+    Suspendu: 'border-red-500/30 bg-red-500/15 text-red-400',
+  }
+
   const actifs = clients.filter((c) => c.statut === 'Actif').length
+  const enAttente = clients.filter((c) => c.statut === 'En attente').length
 
   return (
     <>
       <header className="mb-8">
         <h1 className="text-2xl font-bold text-white md:text-3xl">Gestion des clients</h1>
         <p className="mt-1 text-sm text-white/50">
-          Consultez, suspendez ou supprimez les comptes clients. Les comptes sont
-          créés par les clients eux-mêmes à l’inscription sur le site.
+          Validez, suspendez ou supprimez les comptes clients. À l’inscription, un
+          compte est « En attente » : le client ne peut se connecter qu’une fois que
+          vous l’avez accepté.
         </p>
       </header>
 
-      <section className="mb-6 grid grid-cols-3 gap-4">
+      <section className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {[
           { label: 'Total clients', value: clients.length },
           { label: 'Actifs', value: actifs },
-          { label: 'Suspendus', value: clients.length - actifs },
+          { label: 'En attente', value: enAttente },
+          { label: 'Suspendus', value: clients.length - actifs - enAttente },
         ].map((s) => (
           <div key={s.label} className="rounded-xl border border-white/10 bg-neutral-900/70 backdrop-blur-sm p-4">
             <div className="text-xs uppercase tracking-wider text-white/50">{s.label}</div>
@@ -380,14 +429,21 @@ function Clients() {
                 <td className="px-5 py-3.5 font-mono text-white/80">{c.nb_moteurs} moteur{c.nb_moteurs > 1 ? 's' : ''}</td>
                 <td className="px-5 py-3.5">
                   <span className={`inline-block rounded-full border px-3 py-1 text-xs font-semibold ${
-                    c.statut === 'Actif' ? 'border-emerald-500/30 bg-emerald-500/15 text-emerald-400' : 'border-amber-500/30 bg-amber-500/15 text-amber-400'
+                    badgeStatut[c.statut] || 'border-white/15 text-white/50'
                   }`}>{c.statut}</span>
                 </td>
                 <td className="px-5 py-3.5">
                   <div className="flex justify-end gap-2">
-                    <button onClick={() => basculerStatut(c.email)} className="rounded-md border border-white/20 px-3 py-1.5 text-xs font-medium text-white/80 transition hover:bg-white/10">
-                      {c.statut === 'Actif' ? 'Suspendre' : 'Réactiver'}
-                    </button>
+                    {c.statut !== 'Actif' && (
+                      <button onClick={() => definirStatut(c.email, 'Actif')} className="rounded-md border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-400 transition hover:bg-emerald-500/20">
+                        Accepter
+                      </button>
+                    )}
+                    {c.statut === 'Actif' && (
+                      <button onClick={() => definirStatut(c.email, 'Suspendu')} className="rounded-md border border-amber-500/40 bg-amber-500/10 px-3 py-1.5 text-xs font-medium text-amber-300 transition hover:bg-amber-500/20">
+                        Suspendre
+                      </button>
+                    )}
                     <button onClick={() => supprimer(c.email)} className="rounded-md border border-red-500/40 bg-red-500/10 px-3 py-1.5 text-xs font-semibold text-red-400 transition hover:bg-red-500/20">
                       Supprimer
                     </button>
